@@ -12,6 +12,8 @@
 
 \DeclareOption{12pt}{\PassOptionsToClass{12pt}{article}}
 
+% \DeclareOption{nosignature}{code}
+
 % ---------------------------- execution of options ---------------------
 
 \ProcessOptions \relax
@@ -68,7 +70,7 @@
   \endgroup
 }
 
-% define closing: date, recipient address, salutation
+% define closing: signature, name affiliation
 
 \def\makeclosing{
 \par \vspace{1.5em}

@@ -18,10 +18,12 @@ echo "Designator is ${designator}."
 
 ### CREATE DIRECTORIES ###
 
-mkdir -v $designator
-cd $designator
+# Make the main directory for the letter and move into it
+mkdir -v "$designator"
+cd "$designator"
 
-mkdir -v materials
+# Make a subfolder for reference materials
+mkdir -v "materials"
 
 ### CREATE TEMPLATE FILES ###
 
@@ -35,20 +37,36 @@ EOF
 # TeX letter body
 
 cat > $designator.tex <<'EOF'
-\documentclass{hoflet}
+\DocumentMetadata{tagging=on,lang=en-US}
+\documentclass[12pt]{hoflet}
 
-\recipient}{}
-\salutation}{}
-\mailingaddress}{}
+\recipient{}
+\salutation{}
+\mailingaddress{}
+\myfullname{Christopher H.~Eliot}
+\myposition{Associate Professor}
 
 \begin{document}
-
-
 
 \end{document}
 EOF
 
 echo "Generated directories and files."
+
+### LATEXMK ###
+
+cat > .latexmkrc <<'EOF'
+# latexmkrc for hoflet class
+
+# Use LuaLaTeX
+$pdf_mode = 4;
+
+# Display processing time
+$show_time = 1;
+
+# Disable BibTeX and Biber
+$bibtex_use = 0;
+EOF
 
 ### GIT ###
 

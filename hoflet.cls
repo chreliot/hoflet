@@ -10,25 +10,31 @@
 
 % --------------------------- declaration of options --
 
-% \DeclareOption{cropmarks}{\setboolean{cropmarks}{true}}
-% \DeclareOption{bind} {\AtEndOfClass{\addtolength\oddsidemargin{.5in}%
-% \addtolength\evensidemargin{-.5in}}}
-% \DeclareOption* {\PassOptionsToClass{\CurrentOption}{article}}
+\DeclareOption{12pt}{\PassOptionsToClass{12pt}{article}}
 
 % ---------------------------- execution of options ---------------------
 
-% \ProcessOptions \relax % cf. hint on p.700!
+\ProcessOptions \relax
 
 % --------------------------------package loading ------------------------
 
 \LoadClass{article} % the real code
 
 \RequirePackage{geometry}
-\geometry{letterpaper,driver=luatex,top=2in,bottom=1.5in,hmargin=1in}
+\geometry{letterpaper,driver=luatex,top=1.5in,bottom=1.5in,hmargin=1.13in}
 
 \RequirePackage{ragged2e}
 
+\RequirePackage{url}
+
+\RequirePackage{graphicx}
+\graphicspath{ {../images/} }
+\RequirePackage{tikz}
+
 % -------------------------------- main code ----------------------------
+
+
+% format paragraphs: ragged right, no indenting, and 1 em inter-paragraph spacing
 
 \AtBeginDocument{%
   \setlength{\parindent}{0pt}%
@@ -36,23 +42,60 @@
   \RaggedRight%
 }
 
-\def\recipient#1{\gdef\@recipient{#1}}
-\def\salutation#1{\gdef\@salutation{#1}}
-\def\mailingaddress#1{\gdef\@mailingaddress{#1}}
+% create input commands for the user to store letter information
 
-\def\makepreamble{
-\noindent \today\par
-\vspace{1.5em}
-\@mailingaddress\par
-\vspace{1em}
-Dear~\@salutation{,}\par
-\vspace{1em}
+\def\recipient#1{\gdef\@recipient{#1}}   % e.g., Professor Barbara McClintock
+\def\salutation#1{\gdef\@salutation{#1}} % e.g., Dr. McClintock
+\def\mailingaddress#1{\gdef\@mailingaddress{#1}} % e.g.,  Cold Spring Harbor Laboratory\\ 1 Bungtown Rd\\ Cold Spring Harbor, NY 11724
+\def\myfullname#1{\gdef\@myfullname{#1}} % e.g., Christopher H. ELiot
+\def\myposition#1{\gdef\@myposition{#1}} % e.g., Associate Professor
+
+% define opening: date, recipient address, salutation
+
+\def\makeopening{%
+  \par                          % end any previous paragraph
+  \begingroup
+   \leftskip=0pt\rightskip=0pt % remove any horizontal glue
+   \parindent=0pt           % no first-line indent
+   \RaggedRight                % make text flush left
+   \noindent\today\par         % the date, flush with left margin
+   \vspace{1.5em}
+   \noindent\@recipient\\
+   \noindent\@mailingaddress\par
+   % \medskip%
+   \noindent Dear~\@salutation,\par
+   % \medskip%
+  \endgroup
 }
 
-\def\makesignature{
-\vspace{1.5em}
-Christopher H.~Eliot
+% define closing: date, recipient address, salutation
+
+\def\makeclosing{
+\par \vspace{1.5em}
+\setlength{\parindent}{0pt}%
+\setlength{\parskip}{0pt}%
+Respectfully submitted,\par
+\includegraphics[alt={the sender's signature},height=2cm]{signature.png}\par
+\@myfullname \\ \@myposition
 }
 
-\AtBeginDocument{\makepreamble}
-\AtEndDocument{\makesignature}
+% overlay letterhead
+
+\def\makeheader{
+\begin{tikzpicture}[remember picture, overlay]
+	\node[anchor=north west,inner sep=0,outer sep=0] (header) at (current page.north west) {\includegraphics[alt={Hofstra University letterhead header},width=\paperwidth]{../images/department-header.png}};
+\end{tikzpicture}	
+}
+
+\def\makefooter{
+\begin{tikzpicture}[remember picture, overlay]
+	\node[anchor=south west,inner sep=0,outer sep=0] (header) at (current page.south west) {\includegraphics[alt={Hofstra University letterhead footer},width=\paperwidth]{../images/department-footer.png}};
+\end{tikzpicture}	
+}
+
+\thispagestyle{empty}
+
+\AtBeginDocument{\makeheader}
+\AtBeginDocument{\makefooter}
+\AtBeginDocument{\makeopening}
+\AtEndDocument{\makeclosing}

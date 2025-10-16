@@ -24,7 +24,7 @@ Write letters on your Hofstra University letterhead in LaTeX.
 	   ├── department-header.png
 	   └── signature.png
 ```
-  * The `images` folder you create should contain three files:  (1) `department-header.png`, (2) `department-footer.png`, and (3) `signature.png`. You can easily grab your letterhead's header and footer images from the Word document version of the letterhead for your unit. Save those image files as `.png` files with these names, in the `images` folder. Similarly, save a photo (or whatever) of your signature as `signature.png` in the same place. Typesetting should complete just fine if a signature file isn't available. It won't complete without the letterhead header and footer files. 
+  * The `images` folder you create should contain three files:  (1) `department-header.png`, (2) `department-footer.png`, and (3) `signature.png`. You can easily grab your letterhead's header and footer images from the Word document version of the letterhead for your unit. Save those image files as `.png` files with these names, in the `images` folder. Similarly, save a photo (or whatever) of your signature as `signature.png` in the same place. ~~Typesetting should complete just fine if a signature file isn't available.~~ It won't complete without the letterhead header and footer files, and, for the moment, a signature file. Todo: insert blank space if `signature.png` is missing.
 
 ## Notes on usage
 

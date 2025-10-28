@@ -9,7 +9,7 @@ IFS=$'\n\t'
 
 
 
-rsync -ar ~/code/prodscr/hoflet.cls ~/Library/texmf/tex/latex/hoflet.cls
+rsync -ar ~/code/hoflet/hoflet.cls ~/Library/texmf/tex/latex/hoflet.cls
 
 # report
 

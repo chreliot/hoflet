@@ -16,6 +16,8 @@
   report.if = @hoflet@report 
 }
 
+% \DeclareOption{nosignature}{code}
+
 % ---------------------------- execution of options ---------------------
 
 \ProcessKeyOptions
@@ -97,7 +99,7 @@
 }
 \fi
 
-% define closing: date, recipient address, salutation
+% define closing: signature, name affiliation
 
 \def\makeclosing{
 \par \vspace{1.5em}

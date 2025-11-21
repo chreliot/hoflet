@@ -27,13 +27,13 @@
 
 \ProcessKeyOptions
 
-\ProcessOptions\relax  % run old-style option handler to 12pt can be passed through to article
+\ProcessOptions\relax  % run old-style option handler so 12pt can be passed through to article
 
 
 
 % --------------------------------package loading ------------------------
 
-\LoadClass{article} % the real code
+\LoadClass{article} 
 
 \RequirePackage{ifthen}
 
@@ -71,7 +71,7 @@
 % first version is with the `report` class option active
 % second version is a regular letter with no options
 
-\if@hoflet@report      % `report` class action active
+\if@hoflet@report      % `report` class option active
 \def\makeopening{%
   \par                          % end any previous paragraph
   \begingroup

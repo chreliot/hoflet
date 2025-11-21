@@ -10,7 +10,7 @@ Write letters on your Hofstra University letterhead in LaTeX.
   * Based on `article` class, this class is much less restrictive about what can be included than the LaTeX standard `letter` class. You *might* want to write a letter with an image or a table!
  * Everything here should be easy to modify and customize to your usage—the class file, the template, et al. 
   
-## Set-up
+## One-time set-up
  
   * Put `hoflet.cls` in your LaTeX path, for example `~/Library/texmf/tex/latex/`. (Of course it could also be in the same directory as the `.tex` file itself.)
   * The class is set up to expect a sibling directory/folder called `images`. (You could, however change where `images` lives by adjusting the `\graphicspath` on about line 31 of the `.cls`.) As is, the class expects this sort of arrangement inside the folder where your correspondence lives (mine is “Letters”): 
@@ -37,6 +37,20 @@ Write letters on your Hofstra University letterhead in LaTeX.
   * The class doesn't lock in a font. You could add one in the preamble with `fontspec` or hard code one in the class file. (Otherwise, it runs fine with the default Computer Modern.)
   * The class doesn't lock in a font size. So you can declare a font size as a class option. I've been using `\documentclass[12pt]{hoflet}`.
   * Typeset with LuaLaTeX. If you have the included `.latexmk` configuration file, you can typeset with just, e.g., `latexmk Braun-tenure.tex`. Otherwise, I would use `latexmk --lualatex -pv -bibtex- Braun-tenure.tex`. Or whatever works for you.
+ 
+ ## Class options
+ 
+ <dl>
+   <dt>report</dt>
+   <dd>deletes the recipient's name and address and the salutation (“Dear …”); retains the date; useful for generating peer observation reports and other formal non-letters on letterhead.</dd>
+   <dt>nosignature</dt>
+   <dd>replaces the signature image with blank space, but retains the sign-off (“Respectfully submitted,”) and sender's name; useful for draft versions of letters one might not want to sign, or for leaving a space to sign manually; this has the same effect as the file `signature.png` being missing, but leaves the space even if that file is present.</dd>
+ </dl>
+ 
+For example: 
+```
+\documentclass[report]{hoflet}
+```
  
  ## An optional shell-script for quick letter-template folders
  

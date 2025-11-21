@@ -10,15 +10,23 @@
 
 % --------------------------- declaration of options --
 
-\DeclareOption{12pt}{\PassOptionsToClass{12pt}{article}}
+% \DeclareOption{12pt}{\PassOptionsToClass{12pt}{article}}
+
+\DeclareKeys {
+  report.if = @hoflet@report 
+}
 
 % ---------------------------- execution of options ---------------------
 
-\ProcessOptions \relax
+\ProcessKeyOptions
+
+% \ProcessOptions \relax
 
 % --------------------------------package loading ------------------------
 
 \LoadClass{article} % the real code
+
+\RequirePackage{ifthen}
 
 \RequirePackage{geometry}
 \geometry{letterpaper,driver=luatex,top=1.5in,bottom=1.5in,hmargin=1.13in}
@@ -50,9 +58,29 @@
 \def\myfullname#1{\gdef\@myfullname{#1}} % e.g., Christopher H. ELiot
 \def\myposition#1{\gdef\@myposition{#1}} % e.g., Associate Professor
 
-% define opening: date, recipient address, salutation
+% define two versions opening: date, recipient address, salutation
+% first version is with the `report` class option active
+% second version is a regular letter with no options
 
+\if@hoflet@report      % `report` class action active
 \def\makeopening{%
+  \par                          % end any previous paragraph
+  \begingroup
+   \leftskip=0pt\rightskip=0pt % remove any horizontal glue
+   \parindent=0pt           % no first-line indent
+   \RaggedRight                % make text flush left
+   \noindent\today\par         % the date, flush with left margin
+   \vspace{1.5em}
+   % \noindent\@recipient\\
+   % \noindent\@mailingaddress\par
+   % \medskip%
+   %  \noindent Dear~\@salutation,\par
+   % \medskip%
+   \bigskip
+  \endgroup
+}
+\else  
+\def\makeopening{%       % without `report` class active — regular letter
   \par                          % end any previous paragraph
   \begingroup
    \leftskip=0pt\rightskip=0pt % remove any horizontal glue
@@ -67,6 +95,7 @@
    % \medskip%
   \endgroup
 }
+\fi
 
 % define closing: date, recipient address, salutation
 

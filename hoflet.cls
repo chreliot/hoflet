@@ -18,11 +18,18 @@
 
 % \DeclareOption{nosignature}{code}
 
+% ------------------ forward non-key options to article -----
+\DeclareOption*{%
+  \PassOptionsToClass{\CurrentOption}{article}%
+}
+
 % ---------------------------- execution of options ---------------------
 
 \ProcessKeyOptions
 
-% \ProcessOptions \relax
+\ProcessOptions\relax  % run old-style option handler to 12pt can be passed through to article
+
+
 
 % --------------------------------package loading ------------------------
 

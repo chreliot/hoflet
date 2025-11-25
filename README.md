@@ -28,12 +28,12 @@ Write letters on your Hofstra University letterhead in LaTeX.
 
 ## Notes on usage
 
-  * The only thing that *needs* to be in the preamble is content for each of the macros. Example content is in the sample file. The macros are:
-    * `\recipient{}` → e.g., Charles Darwin
-    * `\salutation{}` → e.g., Mr. Darwin 
-    * `\mailingaddress{}` → e.g., Luxted Rd`\\` Downe, Kent`\\` BR6 7JT
-    * `\myfullname{}` → e.g., Christopher H. Eliot
-    * `\myposition{}` → e.g., Associate Professor
+  * The only thing that *needs* to be in the preamble of your letter file is content for each of the macros. Example content is in the sample file. The macros are:
+    * `\recipient{}` → e.g., `\recipient{Charles Darwin}`, recipient's name
+    * `\salutation{}` → e.g., `\salutation{Mr. Darwin}`, inserted after “Dear …” 
+    * `\mailingaddress{}` → e.g., `\mailingaddress{Luxted Rd\\ Downe, Kent\\ BR6 7JT}`
+    * `\myfullname{}` → e.g., `\myfullname{Christopher H. Eliot}`
+    * `\myposition{}` → e.g., `\myposition{Associate Professor}`
   * The class doesn't lock in a font. You could add one in the preamble with `fontspec` or hard code one in the class file. (Otherwise, it runs fine with the default Computer Modern.)
   * The class doesn't lock in a font size. So you can declare a font size as a class option. I've been using `\documentclass[12pt]{hoflet}`.
   * Typeset with LuaLaTeX. If you have the included `.latexmk` configuration file, you can typeset with just, e.g., `latexmk Braun-tenure.tex`. Otherwise, I would use `latexmk --lualatex -pv -bibtex- Braun-tenure.tex`. Or whatever works for you.
@@ -41,9 +41,9 @@ Write letters on your Hofstra University letterhead in LaTeX.
  ## Class options
  
  <dl>
-   <dt>report</dt>
+   <dt><tt>report</tt></dt>
    <dd>deletes the recipient's name and address and the salutation (“Dear …”); retains the date; useful for generating peer observation reports and other formal non-letters on letterhead.</dd>
-   <dt>nosignature</dt>
+   <dt><tt>nosignature</tt></dt>
    <dd>replaces the signature image with blank space, but retains the sign-off (“Respectfully submitted,”) and sender's name; useful for draft versions of letters one might not want to sign, or for leaving a space to sign manually; this has the same effect as the file `signature.png` being missing, but leaves the space even if that file is present.</dd>
  </dl>
  

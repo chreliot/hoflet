@@ -1,7 +1,7 @@
 % -------------------------------- identification ------------------------
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{hoflet}[2025-11-20]
+\ProvidesClass{hoflet}[2026-03-05]
 
 
 % -------------------------------- initial code -------------------------
@@ -13,7 +13,8 @@
 % \DeclareOption{12pt}{\PassOptionsToClass{12pt}{article}}
 
 \DeclareKeys {
-  report.if = @hoflet@report 
+  report.if = @hoflet@report,
+  noclosing.if = @hoflet@noclosing 
 }
 
 % \DeclareOption{nosignature}{code}
@@ -106,8 +107,21 @@
 }
 \fi
 
-% define closing: signature, name affiliation
+% define closing: 
+% define two versions closing: signature, name, affiliation
+% first version is with the `noclosing` class option active
+% second version is a regular letter with no options
 
+\if@hoflet@noclosing  % `noclosing` class option active
+ \def\makeclosing{
+ \par \vspace{1.5em}
+ % \setlength{\parindent}{0pt}%
+ % \setlength{\parskip}{0pt}%
+ % Respectfully submitted,\par
+ % \includegraphics[alt={the sender's signature},height=2cm]{signature.png}\par
+ % \@myfullname \\ \@myposition
+ }
+\else
 \def\makeclosing{
 \par \vspace{1.5em}
 \setlength{\parindent}{0pt}%
@@ -116,6 +130,7 @@ Respectfully submitted,\par
 \includegraphics[alt={the sender's signature},height=2cm]{signature.png}\par
 \@myfullname \\ \@myposition
 }
+\fi  
 
 % overlay letterhead
 

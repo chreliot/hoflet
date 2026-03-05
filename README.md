@@ -43,6 +43,9 @@ Write letters on your Hofstra University letterhead in LaTeX.
  <dl>
    <dt><tt>report</tt></dt>
    <dd>deletes the recipient's name and address and the salutation (“Dear …”); retains the date; useful for generating peer observation reports and other formal non-letters on letterhead.</dd>
+   <dl>
+    <dt><tt>noclosing</tt></dt>
+    <dd>completely deletes everything after the body.</dd>
    <dt><tt>nosignature</tt></dt>
    <dd>replaces the signature image with blank space, but retains the sign-off (“Respectfully submitted,”) and sender's name; useful for draft versions of letters one might not want to sign, or for leaving a space to sign manually; this has the same effect as the file `signature.png` being missing, but leaves the space even if that file is present.</dd>
  </dl>

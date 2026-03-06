@@ -48,7 +48,7 @@ Write letters on your Hofstra University letterhead in LaTeX. Rendered example h
  
  <dl>
    <dt><tt>report</tt></dt>
-   <dd>This deletes the recipient's name and address and the salutation (“Dear …”), but it retains the date. This is useful for generating peer-observation reports and other items letterhead that aren't addressed to anyone.</dd>
+   <dd>This deletes the recipient's name and address and the salutation (“Dear …”), but it retains the date. This is useful for generating peer-observation reports and other items on letterhead that aren't addressed to anyone.</dd>
    <dl>
     <dt><tt>noclosing</tt></dt>
     <dd>This completely deletes everything after the body.</dd>
@@ -75,4 +75,4 @@ Finally, the script initializes git version control and pulls down a `.gitignore
  
  ## Questions or suggestions?
  
- Please feel welcome to contact me (Christopher.H.Eliot at our university) with questions or suggestions. Please feel welcome to fork this and/or customize it to your heart's content. Happy letter-writing!
+ Please feel welcome to contact me (Christopher.H.Eliot at our university) with questions or suggestions. Please feel welcome to fork this and/or customize it. Happy letter-writing.

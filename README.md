@@ -1,19 +1,25 @@
 # `hoflet` LaTeX class
 
-Write letters on your Hofstra University letterhead in LaTeX.
+Write letters on your Hofstra University letterhead in LaTeX. Rendered example here.
+
+## Design goals
+
+* Though a few minutes of set-up work is required on first use, after that it should be as simple and fast as possible to produce a well-formatted letter on department letterhead in LaTeX.
+* An opinionated design for a standard letter is hard-coded (but user-editable), and then letter-elements (like a signature graphic) may be *removed* with class options, rather than the other way around. 
+
 
 ## Features
 
-  * This uses your letterhead and signature files; drop them in once, as below, and they'll be used in your letters forevermore.
-  * Your `.tex` file for each letter will be clean, with just a few address macros in the preamble, and just the letter content in the body.
-  * Using LuaLaTeX, your letter should be tagged for reading in assistive devices.
-  * Based on `article` class, this class is much less restrictive about what can be included than the LaTeX standard `letter` class. You *might* want to write a letter with an image or a table!
- * Everything here should be easy to modify and customize to your usage—the class file, the template, et al. 
+  * Drop your letterhead graphics and signature files in once, and they'll be used in your letters forevermore.
+  * Your `.tex` file for each letter will be clean, with just a few address-macros in the preamble, and just the letter content in the body.
+  * Using LuaLaTeX, your letter should be tagged for assistive-reading devices.
+  * As it's based on the `article` class, this class is much less restrictive about what can be included than is the LaTeX standard `letter` class. You *might* want to write a letter with an image or a table, after all!
+  * Everything here should be easy to modify and customize to your usage—the class file, the template, et al. 
   
 ## One-time set-up
  
-  * Put `hoflet.cls` in your LaTeX path, for example `~/Library/texmf/tex/latex/`. (Of course it could also be in the same directory as the `.tex` file itself.)
-  * The class is set up to expect a sibling directory/folder called `images`. (You could, however change where `images` lives by adjusting the `\graphicspath` on about line 31 of the `.cls`.) As is, the class expects this sort of arrangement inside the folder where your correspondence lives (mine is “Letters”): 
+  1. Put `hoflet.cls` in your LaTeX path, for example `~/Library/texmf/tex/latex/`. (Of course it could also be in the same directory as the `.tex` file itself.)
+  2. The class is set up to expect a sibling directory/folder called `images`. (You could, however change where `images` lives by adjusting the `\graphicspath` on about line 31 of the `.cls`.) As is, the class expects this sort of arrangement inside your letters folder: 
 ```
    ├── Braun-tenure
    │   └── Braun-tenure.tex
@@ -24,7 +30,7 @@ Write letters on your Hofstra University letterhead in LaTeX.
 	   ├── department-header.png
 	   └── signature.png
 ```
-  * The `images` folder you create should contain three files:  (1) `department-header.png`, (2) `department-footer.png`, and (3) `signature.png`. You can easily grab your letterhead's header and footer images from the Word document version of the letterhead for your unit. Save those image files as `.png` files with these names, in the `images` folder. Similarly, save a photo (or whatever) of your signature as `signature.png` in the same place. ~~Typesetting should complete just fine if a signature file isn't available.~~ It won't complete without the letterhead header and footer files, and, for the moment, a signature file. Todo: insert blank space if `signature.png` is missing.
+  3. The `images` folder you create should contain three files:  (1) `department-header.png`, (2) `department-footer.png`, and (3) `signature.png`. You can easily grab your letterhead's header and footer images from the Word document version of the letterhead for your unit. Save those image files as `.png` files with these names, in the `images` folder. Similarly, save a photo (or whatever) of your signature as `signature.png` in the same place. ~~Typesetting should complete just fine if a signature file isn't available.~~ It won't complete without the letterhead header and footer files, and, for the moment, a signature file. Todo: insert blank space if `signature.png` is missing.
 
 ## Notes on usage
 
@@ -42,26 +48,30 @@ Write letters on your Hofstra University letterhead in LaTeX.
  
  <dl>
    <dt><tt>report</tt></dt>
-   <dd>deletes the recipient's name and address and the salutation (“Dear …”); retains the date; useful for generating peer observation reports and other formal non-letters on letterhead.</dd>
+   <dd>This deletes the recipient's name and address and the salutation (“Dear …”), but it retains the date. This is useful for generating peer-observation reports and other items letterhead that aren't addressed to anyone.</dd>
    <dl>
     <dt><tt>noclosing</tt></dt>
-    <dd>completely deletes everything after the body.</dd>
+    <dd>This completely deletes everything after the body.</dd>
    <dt><tt>nosignature</tt></dt>
-   <dd>replaces the signature image with blank space, but retains the sign-off (“Respectfully submitted,”) and sender's name; useful for draft versions of letters one might not want to sign, or for leaving a space to sign manually; this has the same effect as the file `signature.png` being missing, but leaves the space even if that file is present.</dd>
+   <dd>This replaces the signature image with blank space, but retains the sign-off (“Respectfully submitted,”) and sender's name. This might be useful for unsigned, draft versions of letters, or for leaving a space to sign manually. It has the same effect as the file `signature.png` being missing, but it leaves the space for a signature even if that file is present.</dd>
+   <dt><tt>noletterhead</tt></dt>
+    <dd>This replaces the letterhead images with the same-size whitespace. This is useful if you begin a letter using the class but then need to print it on acutal letterhead.</dd>
  </dl>
  
-For example: 
+Class options go in the usual place. For example: 
 ```
-\documentclass[report]{hoflet}
+\documentclass[noclosing]{hoflet}
 ```
  
  ## An optional shell-script for quick letter-template folders
  
- Optionally, there's a little bash script included here called `writeltr.sh` that you can run in your letters folder to generate a folder with a template letter inside. As is, it will also initialize git version control. You'd probably want to customize it for your purposes.
+A fast way to begin a letter is to navigate to your letters folder and run the little, included bash script that sets up a letter. The `writeltr.sh` script generates a subfolder with a template letter inside. You would presumably run it in your letters folder that contains an `images` folder, as above. As is, the script will also initialize git version control. You may want to modify the script for your purposes.
  
- When I start a letter, I navigate to my Letters folder and just type `bash writeltr.sh`. The script interactively asks for a last name (like “Darwin”) and a letter-purpose (like “tenure”). In the version included here, it then creates a blank template letter inside an appropriately titled folder.
+When I begin a letter, I navigate to my Letters folder and just type `bash writeltr.sh`. The script interactively asks for a last name (like “Darwin”) and a letter-purpose (like “tenure”), which it uses for file-naming. It then creates a blank template letter inside an appropriately titled folder.
  
- The script also creates a `materials` folder and a `.taskpaper` file. (That's an open, plain-text task-list format used by various apps including the MacOS Taskpaper app.) Then the script initializes git version control and pulls down a `.gitignore` file from GitHub. Note, if you use it, that the script currently uses the GitHub CLI script `gh` to pull down a LaTeX `.gitignore` file from GitHub. It assumes that's installed; you would need to install `gh` or comment that line out of the script.
+The script also creates a `materials` folder and a `.taskpaper` file. (That's an open, plain-text task-list format used by various apps including the MacOS Taskpaper app.) I put résumés and other reference materials for the subject of the letter in the `materials` folder, and I list to-dos like “include a comment about Senate” in the `.taskpaper` list. Comment out those lines if you prefer.
+ 
+Finally, the script initializes git version control and pulls down a `.gitignore` file from GitHub. Note, if you use it, that the script currently uses the GitHub CLI script `gh` to pull down a LaTeX `.gitignore` file from GitHub. It assumes that's installed; you would need to install `gh` or comment that line out of the script.
  
  ## Questions or suggestions?
  

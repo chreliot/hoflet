@@ -14,7 +14,8 @@
 
 \DeclareKeys {
   report.if = @hoflet@report,
-  noclosing.if = @hoflet@noclosing 
+  noclosing.if = @hoflet@noclosing, 
+  noletterhead.if = @hoflet@noletterhead
 }
 
 % \DeclareOption{nosignature}{code}
@@ -68,20 +69,25 @@
 \def\myfullname#1{\gdef\@myfullname{#1}} % e.g., Christopher H. ELiot
 \def\myposition#1{\gdef\@myposition{#1}} % e.g., Associate Professor
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% opening, and report class option %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 % define two versions opening: date, recipient address, salutation
 % first version is with the `report` class option active
 % second version is a regular letter with no options
 
-\if@hoflet@report      % `report` class option active
+\if@hoflet@report               % `report` class option active
 \def\makeopening{%
   \par                          % end any previous paragraph
   \begingroup
    \leftskip=0pt\rightskip=0pt % remove any horizontal glue
-   \parindent=0pt           % no first-line indent
+   \parindent=0pt              % no first-line indent
    \RaggedRight                % make text flush left
    \noindent\today\par         % the date, flush with left margin
    \vspace{1.5em}
-   % \noindent\@recipient\\
+   % \noindent\@recipient\\    % recipient and salut commented out 
    % \noindent\@mailingaddress\par
    % \medskip%
    %  \noindent Dear~\@salutation,\par
@@ -94,7 +100,7 @@
   \par                          % end any previous paragraph
   \begingroup
    \leftskip=0pt\rightskip=0pt % remove any horizontal glue
-   \parindent=0pt           % no first-line indent
+   \parindent=0pt              % no first-line indent
    \RaggedRight                % make text flush left
    \noindent\today\par         % the date, flush with left margin
    \vspace{1.5em}
@@ -107,10 +113,16 @@
 }
 \fi
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% closing, and noclosing class option %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % define closing: 
 % define two versions closing: signature, name, affiliation
 % first version is with the `noclosing` class option active
 % second version is a regular letter with no options
+
 
 \if@hoflet@noclosing  % `noclosing` class option active
  \def\makeclosing{
@@ -132,23 +144,64 @@ Respectfully submitted,\par
 }
 \fi  
 
-% overlay letterhead
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% letterhead images, and noletterhead class option %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\makeheader{
-\begin{tikzpicture}[remember picture, overlay]
-	\node[anchor=north west,inner sep=0,outer sep=0] (header) at (current page.north west) {\includegraphics[alt={Hofstra University letterhead header},width=\paperwidth]{../images/department-header.png}};
-\end{tikzpicture}	
+% create letterhead overlays
+% if the noletterhead option is selected, the overlay is whitespace
+
+% for the noletterhead option, compute exact aspect ratios of images to replace with whitespace
+\newlength{\headerheight}
+\newlength{\footerheight}
+\setlength{\headerheight}{\dimexpr \paperwidth/85*19\relax}    % header: 570/2550 = 19/85
+\setlength{\footerheight}{\dimexpr \paperwidth/2562*495\relax} % footer: 495/2562
+
+\if@hoflet@noletterhead
+
+% whitespace header (from page.north west downwards)
+\newcommand{\makeheader}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \path (current page.north west) rectangle ++(\paperwidth,-\headerheight);
+  \end{tikzpicture}%
 }
 
-\def\makefooter{
-\begin{tikzpicture}[remember picture, overlay]
-	\node[anchor=south west,inner sep=0,outer sep=0] (header) at (current page.south west) {\includegraphics[alt={Hofstra University letterhead footer},width=\paperwidth]{../images/department-footer.png}};
-\end{tikzpicture}	
+% whitespace footer (from page.south west upwards)
+\newcommand{\makefooter}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \path (current page.south west) rectangle ++(\paperwidth,\footerheight);
+  \end{tikzpicture}%
 }
+
+\else
+
+% image header (from page.north west downwards)
+\newcommand{\makeheader}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=north west,inner sep=0,outer sep=0]
+      at (current page.north west)
+      {\includegraphics[alt={Hofstra University letterhead header},width=\paperwidth]{../images/department-header.png}};
+  \end{tikzpicture}%
+}
+
+% image footer (from page.south west upwards)
+\newcommand{\makefooter}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=south west,inner sep=0,outer sep=0]
+      at (current page.south west)
+      {\includegraphics[alt={Hofstra University letterhead footer},width=\paperwidth]{../images/department-footer.png}};
+  \end{tikzpicture}%
+}
+
+\fi
+
 
 \thispagestyle{empty}
 
+
 \AtBeginDocument{\makeheader}
 \AtBeginDocument{\makefooter}
+
+
 \AtBeginDocument{\makeopening}
 \AtEndDocument{\makeclosing}

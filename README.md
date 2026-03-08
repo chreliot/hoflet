@@ -34,15 +34,16 @@ Write letters on your Hofstra University letterhead in LaTeX. Rendered example h
 
 ## Notes on usage
 
-  * The only thing that *needs* to be in the preamble of your letter file is content for each of the macros. Example content is in the sample file. The macros are:
+  * **Required macros** The only thing that *needs* to be in the preamble of your letter file is content for each of the macros. Example content is in the sample file. The macros are:
     * `\recipient{}` → e.g., `\recipient{Charles Darwin}`, recipient's name
     * `\salutation{}` → e.g., `\salutation{Mr. Darwin}`, inserted after “Dear …” 
     * `\mailingaddress{}` → e.g., `\mailingaddress{Luxted Rd\\ Downe, Kent\\ BR6 7JT}`
     * `\myfullname{}` → e.g., `\myfullname{Christopher H. Eliot}`
     * `\myposition{}` → e.g., `\myposition{Associate Professor}`
-  * The class doesn't lock in a font. You could add one in the preamble with `fontspec` or hard code one in the class file. (Otherwise, it runs fine with the default Computer Modern.)
-  * The class doesn't lock in a font size. So you can declare a font size as a class option. I've been using `\documentclass[12pt]{hoflet}`.
-  * Typeset with LuaLaTeX. If you have the included `.latexmk` configuration file, you can typeset with just, e.g., `latexmk Braun-tenure.tex`. Otherwise, I would use `latexmk --lualatex -pv -bibtex- Braun-tenure.tex`. Or whatever works for you.
+  * **Font** The class doesn't lock in a font. You could add one in the preamble with `fontspec` or hard code one in the class file. (Otherwise, it runs fine with the default Computer Modern.)
+  * **Font size** The class doesn't lock in a font size. So you can declare a font size as a class option. I've been using `\documentclass[12pt]{hoflet}`.
+  * **Typesetting** Typeset with LuaLaTeX. If you have the included `.latexmk` configuration file, you can typeset with just, e.g., `latexmk Braun-tenure.tex`. Otherwise, I would use `latexmk --lualatex -pv -bibtex- Braun-tenure.tex`. Or whatever works for you.
+  * **CC** A carbon-copy recipient can be added in the preamble with `\cc{}`. Multiple cc recipients can be listed in two ways: in the same command (`\cc{S.A. Forbes\\H.C. Cowles}`) or in separate ones (`\cc{S.A. Forbes} \cc{H.C. Cowles}`). 
  
  ## Class options
  

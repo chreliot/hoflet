@@ -193,17 +193,47 @@ Respectfully submitted,\par
 
 % make "cc:" section after everything, if cc is defined
 % format is hanging indent, following university style
-% code pilfered with a minor change from the standard letter class
 
-\def\makecc{ % define \makecc for use \AtEndDocument
-\ifthenelse{\isundefined{\cc}}{ % if the \cc command is undefined, do nothing
-}{ %but if \cc *is* defined, 
-\par\bigskip
-\par\noindent
-\parbox[t]{\textwidth}{%
-\@hangfrom{\normalfont\cc: }%
-\ignorespaces #1\strut}\par}
+\makeatletter
+
+% default label (user/class may \renewcommand\ccname{Copied to})
+\providecommand\ccname{cc}
+
+% set indent length for cc recipient column (change 1cm if you you like)
+\newlength\ccindent
+\setlength\ccindent{1cm}
+
+% store appended CC entries in a list
+\newcommand\@cclist{}%
+
+% \cc{...} appends to \@cclist, so that multiple calls work
+\newcommand\cc[1]{%
+  \ifx\@cclist\@empty
+    \gdef\@cclist{#1}%
+  \else
+    \g@addto@macro\@cclist{\\#1}%
+  \fi
 }
+
+% simple \makecc: label flush left, recipients start at \ccindent
+\newcommand\makecc{%
+  \ifx\@cclist\@empty
+    % nothing to do
+  \else
+    \par\vspace{1.5cm}
+    \noindent
+    % put label flush left without taking horizontal space
+    \makebox[0pt][l]{\normalfont\ccname:}%
+    % then leave \ccindent of space and typeset recipients inside a parbox
+    \hspace{\ccindent}%
+    \parbox[t]{\dimexpr\linewidth-\ccindent\relax}{%
+      \raggedright
+      \ignorespaces\@cclist\strut
+    }%
+    \par
+  \fi
+}
+\makeatother
 
 \thispagestyle{empty}
 

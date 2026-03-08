@@ -1,7 +1,7 @@
 % -------------------------------- identification ------------------------
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{hoflet}[2026-03-05]
+\ProvidesClass{hoflet}[2026-03-08]
 
 
 % -------------------------------- initial code -------------------------

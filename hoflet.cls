@@ -74,7 +74,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-% define two versions opening: date, recipient address, salutation
+% define two versions of opening: date, recipient address, salutation
 % first version is with the `report` class option active
 % second version is a regular letter with no options
 

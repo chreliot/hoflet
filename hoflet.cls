@@ -68,7 +68,6 @@
 \def\mailingaddress#1{\gdef\@mailingaddress{#1}} % e.g.,  Cold Spring Harbor Laboratory\\ 1 Bungtown Rd\\ Cold Spring Harbor, NY 11724
 \def\myfullname#1{\gdef\@myfullname{#1}} % e.g., Christopher H. ELiot
 \def\myposition#1{\gdef\@myposition{#1}} % e.g., Associate Professor
-\def\cc#1{\gdef\@cc{#1}} % e.g., Gleason\\Whittaker
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % opening, and report class option %
@@ -128,11 +127,6 @@
 \if@hoflet@noclosing  % `noclosing` class option active
  \def\makeclosing{
  \par \vspace{1.5em}
- % \setlength{\parindent}{0pt}%
- % \setlength{\parskip}{0pt}%
- % Respectfully submitted,\par
- % \includegraphics[alt={the sender's signature},height=2cm]{signature.png}\par
- % \@myfullname \\ \@myposition
  }
 \else
 \def\makeclosing{

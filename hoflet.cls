@@ -68,6 +68,7 @@
 \def\mailingaddress#1{\gdef\@mailingaddress{#1}} % e.g.,  Cold Spring Harbor Laboratory\\ 1 Bungtown Rd\\ Cold Spring Harbor, NY 11724
 \def\myfullname#1{\gdef\@myfullname{#1}} % e.g., Christopher H. ELiot
 \def\myposition#1{\gdef\@myposition{#1}} % e.g., Associate Professor
+\def\cc#1{\gdef\@cc{#1}} % e.g., Gleason\\Whittaker
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % opening, and report class option %
@@ -196,6 +197,20 @@ Respectfully submitted,\par
 \fi
 
 
+% make "cc:" section after everything, if cc is defined
+% format is hanging indent, following university style
+% code pilfered with a minor change from the standard letter class
+
+\def\makecc{ % define \makecc for use \AtEndDocument
+\ifthenelse{\isundefined{\cc}}{ % if the \cc command is undefined, do nothing
+}{ %but if \cc *is* defined, 
+\par\bigskip
+\par\noindent
+\parbox[t]{\textwidth}{%
+\@hangfrom{\normalfont\cc: }%
+\ignorespaces #1\strut}\par}
+}
+
 \thispagestyle{empty}
 
 
@@ -205,3 +220,4 @@ Respectfully submitted,\par
 
 \AtBeginDocument{\makeopening}
 \AtEndDocument{\makeclosing}
+\AtEndDocument{\makecc}
